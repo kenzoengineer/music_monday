@@ -2,7 +2,6 @@ import type { Entry, GenericPaneProps, Name } from "../../types";
 import Pane from "../Pane";
 import { Tooltip } from "react-tooltip";
 import SpotifyEmbed from "../SpotifyEmbed";
-import { linkToEmbedLink } from "../../script";
 
 const SONG_TOOLTIP = "song-tooltip";
 
@@ -31,7 +30,7 @@ const WinHistory = ({ entries }: GenericPaneProps) => {
   return (
     <Pane title="Winner History" description="Last 30 weeks">
       <div className="flex gap-x-2 mb-4 -mt-2">
-        {(Object.keys(colorMap) as (Name | "")[]).map((v, i) => {
+        {(Object.keys(colorMap) as (Name | "")[]).map((v) => {
           return <p className={`${colorMap[v]} font-bold`}>{v}</p>;
         })}
       </div>
