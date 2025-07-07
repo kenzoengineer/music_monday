@@ -3,9 +3,14 @@ const ORDER = ["Souren", "Kevin", "Ken", "Artom", "Andrew"];
 const MostRecent = () => {
   const nextMonday = new Date();
   nextMonday.setHours(0, 0, 0, 0);
-  nextMonday.setDate(
-    nextMonday.getDate() + ((8 - nextMonday.getDay()) % 7 || 7)
-  );
+
+  // lets check if today is monday?
+  const isMonday = nextMonday.getDay() === 1;
+  if (!isMonday) {
+    nextMonday.setDate(
+      nextMonday.getDate() + ((8 - nextMonday.getDay()) % 7 || 7)
+    );
+  }
   const formattedMonday = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
@@ -20,15 +25,18 @@ const MostRecent = () => {
   const nextJudgeIdx = weeksDiff % ORDER.length;
 
   return (
-    <section className="flex gap-10 items-center mb-5">
+    <section className="flex max-md:flex-col gap-10 items-center mb-5">
       <div className="">
         <h2 className="text-md">Upcoming Music Monday</h2>
-        <p className="text-2xl font-bold">
-          {formattedMonday} (#{weeksDiff + 21})
+        <p className="text-2xl font-bold flex items-center">
+          {formattedMonday} (#{weeksDiff + 21}){" "}
+          {isMonday && (
+            <span className="text-xs m-auto text-yellow-300">today!</span>
+          )}
         </p>
       </div>
       <div className="">
-        <h2 className="text-md">Upcoming Judge</h2>
+        <h2 className="text-md">{isMonday ? "Today's" : "Upcoming"} Judge</h2>
         <div className="flex">
           {ORDER.map((x, i) => {
             return (

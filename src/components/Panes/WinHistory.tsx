@@ -2,10 +2,13 @@ import type { Entry, GenericPaneProps, Name } from "../../types";
 import Pane from "../Pane";
 import { Tooltip } from "react-tooltip";
 import SpotifyEmbed from "../SpotifyEmbed";
+import { useWindowDimension } from "../../script";
 
 const SONG_TOOLTIP = "song-tooltip";
 
 const WinHistory = ({ entries }: GenericPaneProps) => {
+  const [w, _] = useWindowDimension();
+  const MAX = w < 768 ? 7 : 30;
   let history: (Entry | "")[] = entries.filter((v) => v.winner);
   if (history.length < 30) {
     history = (Array.from({ length: 30 - history.length }).fill("") as ""[])
@@ -28,14 +31,14 @@ const WinHistory = ({ entries }: GenericPaneProps) => {
     Souren: "bg-yellow-600",
   };
   return (
-    <Pane title="Winner History" description="Last 30 weeks">
+    <Pane title="Winner History" description={`Last ${MAX} weeks`}>
       <div className="flex gap-x-2 mb-4 -mt-2">
         {(Object.keys(colorMap) as (Name | "")[]).map((v) => {
           return <p className={`${colorMap[v]} font-bold`}>{v}</p>;
         })}
       </div>
       <div className="flex">
-        {history.map((v, i) => {
+        {history.slice(-MAX).map((v, i) => {
           if (v === "") {
             return <div className="w-4 h-48 bg-zinc-700 mx-1 rounded-sm" />;
           }

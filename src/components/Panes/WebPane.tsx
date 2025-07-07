@@ -8,7 +8,11 @@ const WebPane = ({ entries }: GenericPaneProps) => {
       title="Who votes who?"
       description="Number of times a pair has voted for eachother"
     >
-      <Web entries={entries} />
+      <div className="max-md:w-96 flex items-center justify-center">
+        <div className="max-md:scale-75">
+          <Web entries={entries} />
+        </div>
+      </div>
     </Pane>
   );
 };
