@@ -11,7 +11,7 @@ from datetime import date, timedelta
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot: StateBot = bot
-        self.TOTAL_SUBMISSIONS = 2
+        self.TOTAL_SUBMISSIONS = 4
 
     def get_judge(self) -> list[str, str]:
         """Returns the judge for the week
