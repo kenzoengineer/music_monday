@@ -2,7 +2,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from discord.ext import commands
 
-type submissions_map = dict[str, str]
+submissions_map = dict[str, str]
 
 
 class State:
