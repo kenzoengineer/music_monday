@@ -6,7 +6,7 @@ from util.embeds import Embeds
 
 class JudgeView(discord.ui.View):
     def __init__(self, songs: dict[str, str], userIds: list[str]):
-        super().__init__()
+        super().__init__(timeout=None)
         self.songs = songs
         for idx, userId in enumerate(userIds):
             self.add_item(SongButton(str(idx + 1), userId, songs))
