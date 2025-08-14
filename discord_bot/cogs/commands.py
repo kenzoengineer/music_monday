@@ -1,9 +1,11 @@
 import discord
+import io
 from discord.ext import commands
 from discord import app_commands
 from util.state import StateBot
 from util.embeds import Embeds
 from util.views import JudgeView
+from util.gifs import perform_gif_overlay
 from random import shuffle
 from datetime import date, timedelta
 
@@ -112,6 +114,14 @@ class Commands(commands.Cog):
             embed=Embeds.info(
                 title="The next judge is", body=f"# {self.get_judge()[0]}!"
             )
+        )
+
+    @app_commands.command(name="screen", description="ragebait")
+    @app_commands.describe(gif="GIF URL")
+    async def screen(self, interaction: discord.Interaction, gif: str):
+        res = perform_gif_overlay(gif)
+        return await interaction.response.send_message(
+            file=discord.File(io.BytesIO(res), filename="output.gif")
         )
 
 
