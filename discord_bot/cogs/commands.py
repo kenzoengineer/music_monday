@@ -119,10 +119,11 @@ class Commands(commands.Cog):
     @app_commands.command(name="screen", description="ragebait")
     @app_commands.describe(gif="GIF URL")
     async def screen(self, interaction: discord.Interaction, gif: str):
-        res = perform_gif_overlay(gif)
-        return await interaction.response.send_message(
-            file=discord.File(io.BytesIO(res), filename="output.gif")
+        await interaction.response.send_message(
+            content="Generating..."
         )
+        res = perform_gif_overlay(gif)
+        return await interaction.channel.send(file=discord.File(io.BytesIO(res), filename="output.gif"))
 
 
 async def setup(bot):
