@@ -10,11 +10,15 @@ const WinHistory = ({ entries }: GenericPaneProps) => {
   const [w, _] = useWindowDimension();
   const MAX = w < 768 ? 7 : 30;
   let history: (Entry | "")[] = entries.filter((v) => v.winner);
-  if (history.length < 30) {
-    history = (Array.from({ length: 30 - history.length }).fill("") as ""[])
+  if (history.length < MAX) {
+    history = (Array.from({ length: MAX - history.length }).fill("") as ""[])
       // @ts-ignore
       .concat(history);
   }
+  if (history.length > MAX) {
+    history = history.slice(-MAX);
+  }
+  console.log(history);
   const colorMap: Record<Name | "", string> = {
     Ken: "text-lime-600",
     Kevin: "text-cyan-600",
@@ -38,7 +42,7 @@ const WinHistory = ({ entries }: GenericPaneProps) => {
         })}
       </div>
       <div className="flex">
-        {history.slice(-MAX).map((v, i) => {
+        {history.map((v, i) => {
           if (v === "") {
             return <div className="w-4 h-48 bg-zinc-700 mx-1 rounded-sm" />;
           }
