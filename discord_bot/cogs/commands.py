@@ -8,6 +8,7 @@ from util.views import JudgeView
 from util.gifs import perform_gif_overlay
 from random import shuffle
 from datetime import date, timedelta
+from zoneinfo import ZoneInfo
 
 
 class Commands(commands.Cog):
@@ -29,8 +30,9 @@ class Commands(commands.Cog):
             "161921661346643968",
             "196069761082327041",
         ]
+        tz = ZoneInfo("America/New_York")
         start_monday: date = date(2025, 6, 9)
-        nearest_monday = date.today() + timedelta((7 - date.today().weekday()) % 7)
+        nearest_monday = date.today(tz) + timedelta((7 - date.today().weekday()) % 7)
         day_delta = nearest_monday - start_monday
         week_delta = day_delta.days // 7
         return [NAMES[week_delta % len(NAMES)], IDS[week_delta % len(IDS)]]
@@ -119,11 +121,11 @@ class Commands(commands.Cog):
     @app_commands.command(name="screen", description="ragebait")
     @app_commands.describe(gif="GIF URL")
     async def screen(self, interaction: discord.Interaction, gif: str):
-        await interaction.response.send_message(
-            content="Generating..."
-        )
+        await interaction.response.send_message(content="Generating...")
         res = perform_gif_overlay(gif)
-        return await interaction.channel.send(file=discord.File(io.BytesIO(res), filename="output.gif"))
+        return await interaction.channel.send(
+            file=discord.File(io.BytesIO(res), filename="output.gif")
+        )
 
 
 async def setup(bot):
