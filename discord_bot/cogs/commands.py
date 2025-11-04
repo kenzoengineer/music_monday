@@ -7,7 +7,7 @@ from util.embeds import Embeds
 from util.views import JudgeView
 from util.gifs import perform_gif_overlay
 from random import shuffle
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
 
@@ -31,8 +31,11 @@ class Commands(commands.Cog):
             "196069761082327041",
         ]
         tz = ZoneInfo("America/New_York")
+        today = datetime.now(tz).date()
+
+
         start_monday: date = date(2025, 6, 9)
-        nearest_monday = date.today(tz) + timedelta((7 - date.today().weekday()) % 7)
+        nearest_monday = today + timedelta((7 - today.weekday()) % 7)
         day_delta = nearest_monday - start_monday
         week_delta = day_delta.days // 7
         return [NAMES[week_delta % len(NAMES)], IDS[week_delta % len(IDS)]]
